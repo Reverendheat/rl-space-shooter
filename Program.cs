@@ -1,4 +1,5 @@
-﻿using Raylib_cs;  
+﻿using System;
+using Raylib_cs;  
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
@@ -24,7 +25,7 @@ namespace Raylib_Adventures
             P1.Width = 50;
             
             
-            InitWindow(screenWidth, screenHeight, "Space Shooter - Garbage Edition");
+            InitWindow(screenWidth, screenHeight, "Space Shooter - Dollar Store Edition");
             
             P1.Sprite = new Rectangle((GetScreenWidth() / 2) - P1.Width / 2, GetScreenHeight() - (P1.Height + 10), P1.Width, P1.Height);
             
@@ -52,6 +53,7 @@ namespace Raylib_Adventures
                     if (IsKeyDown(KEY_UP)) P1.Move("UP");
                     if (IsKeyDown(KEY_DOWN)) P1.Move("DOWN");
                     if (IsKeyPressed(KEY_SPACE)) P1.Shoot();
+                    
                     // Check for player Sprinting
                     if (IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
                     {
@@ -74,8 +76,7 @@ namespace Raylib_Adventures
 
                     for (int i = 0; i < P1.Bullets.Count; i++)
                     {
-                        var by = P1.Bullets[i].Sprite.y - 20;
-                        P1.Bullets[i].Sprite = new Rectangle(P1.Bullets[i].Sprite.x, by, P1.Bullets[i].Width, P1.Bullets[i].Height);
+                        P1.Bullets[i].Move();
                     }
 
                     //Check for collision
@@ -141,7 +142,6 @@ namespace Raylib_Adventures
                 {
                     for (int i = 0; i < ES.Enemies.Count; i++)
                     {
-                        ES.Enemies[i].Move();
                         DrawRectangleRec(ES.Enemies[i].Sprite, Color.RED);
                     }
                 }
@@ -151,7 +151,6 @@ namespace Raylib_Adventures
                 {
                     for (int i = 0; i < PS.PowerUps.Count; i++)
                     {
-                        PS.PowerUps[i].Move();
                         DrawRectangleRec(PS.PowerUps[i].Sprite, PS.PowerUps[i].s_color);
                     }
                 }
